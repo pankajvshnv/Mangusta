@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mangusta 165 REV — Luxury Without Shorelines</title>
+  <meta name="description"
+    content="Discover Mangusta 165 REV: private charters, ocean-view dining, curated voyages, and effortless life at sea." />
+  <meta property="og:title" content="Mangusta 165 REV — Luxury Without Shorelines" />
+  <meta property="og:description"
+    content="A cinematic superyacht experience shaped by open water, impeccable service, and complete freedom." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ═══ LOADER ═══ -->
+  <div id="loader" class="loader" role="status" aria-label="Loading">
+    <div class="loader-content">
+      <div class="loader-wordmark">MANGUSTA 165 REV</div>
+      <div class="loader-track">
+        <div class="loader-fill" id="loaderFill"></div>
+      </div>
+      <p class="loader-status" id="loaderStatus">Preparing your journey</p>
+    </div>
+  </div>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <header class="nav" id="nav" role="banner">
+    <a href="#" class="nav-logo" id="navLogo" aria-label="Mangusta 165 REV home">
+      <span class="nav-logo-text">Mangusta 165 REV</span>
+    </a>
+    <nav class="nav-center" aria-label="Main navigation">
+      <a href="#about" class="nav-link" id="nav-about">The Vessel</a>
+      <a href="#experiences" class="nav-link" id="nav-exp">Life Aboard</a>
+      <a href="#events" class="nav-link" id="nav-events">Voyages</a>
+      <a href="#gallery" class="nav-link" id="nav-gallery">Gallery</a>
+      <a href="#private" class="nav-link" id="nav-private">Private</a>
+    </nav>
+    <a href="#reserve" class="nav-reserve" id="nav-reserve-btn">Enquire</a>
+  </header>
+
+  <!-- ═══════════════════════════════════
+       HERO — CANVAS SEQUENCE
+  ════════════════════════════════════ -->
+  <section id="hero" class="hero" aria-label="Cinematic journey aboard a luxury yacht">
+    <canvas id="canvas" aria-hidden="true"></canvas>
+
+    <!-- Cinematic overlays -->
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    <!-- Chapter captions -->
+    <div class="chapter" id="ch-space" aria-hidden="true">
+      <span class="chapter-num">01</span>
+      <p class="chapter-label">The Journey Begins</p>
+      <h2 class="chapter-title">Set Sail</h2>
+    </div>
+    <div class="chapter" id="ch-atmos" aria-hidden="true">
+      <span class="chapter-num">02</span>
+      <p class="chapter-label">Oceanic Splendor</p>
+      <h2 class="chapter-title">Beyond the Horizon</h2>
+    </div>
+    <div class="chapter" id="ch-city" aria-hidden="true">
+      <span class="chapter-num">03</span>
+      <p class="chapter-label">Crafted for Freedom</p>
+      <h2 class="chapter-title">Life Without Shorelines</h2>
+    </div>
+    <div class="chapter" id="ch-roof" aria-hidden="true">
+      <span class="chapter-num">04</span>
+      <p class="chapter-label">Your Private World</p>
+      <h2 class="chapter-title">Welcome Aboard</h2>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="scroll-cue" id="scrollCue" aria-hidden="true">
+      <span class="scroll-cue-text">Scroll to explore</span>
+      <div class="scroll-cue-line"></div>
+    </div>
+
+    <!-- Progress indicator -->
+    <div class="hero-progress" id="heroProgress" aria-hidden="true">
+      <div class="hero-progress-fill" id="heroProgressFill"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══ MARQUEE STRIP ═══ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-inner">
+      <span>Mangusta 165 REV&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Luxury Charters&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Seafood Dining&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Oceanic Design&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Sunlit Decks&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Private Voyages&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Endless Horizons&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Mangusta 165 REV&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Luxury Charters&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Seafood Dining&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Oceanic Design&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Sunlit Decks&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Private Voyages&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+      <span>Endless Horizons&nbsp;&nbsp;&mdash;&nbsp;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       §01 — ABOUT THE DESTINATION
+  ════════════════════════════════════ -->
+  <section class="section about-section" id="about">
+    <div class="about-grid">
+      <div class="about-img-col">
+        <div class="about-img-wrap js-img-reveal">
+          <img src="https://www.mangustayachts.com/wp-content/uploads/2022/11/0_Mangusta_165REV_1_running-1_cut-1.jpg"
+            alt="Mangusta 165 REV cruising across open water" loading="lazy" />
+        </div>
+        <div class="about-img-caption">
+          <span>Open Water</span>
+          <span>Worldwide</span>
+        </div>
+      </div>
+      <div class="about-text-col">
+        <div class="about-text-inner">
+          <p class="eyebrow js-reveal">About the Vessel</p>
+          <h2 class="about-headline">
+            <span class="js-reveal-line">Where</span>
+            <span class="js-reveal-line">precision <em>meets</em></span>
+            <span class="js-reveal-line">freedom.</span>
+          </h2>
+          <p class="about-body js-reveal">Mangusta 165 REV is more than a vessel — it is a private world in motion.
+            Sculpted lines, expansive decks, and refined interiors create a seamless connection between contemporary
+            craft and the open sea.</p>
+          <p class="about-body js-reveal">From first light on the sun deck to dinner beneath a canopy of stars, every
+            detail is composed around the horizon. Your route, your rhythm, your ocean.</p>
+          <div class="about-stats js-reveal">
+            <div class="about-stat">
+              <span class="about-stat-n js-counter" data-target="72">0</span>
+              <p>Metres in Length</p>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-n js-counter" data-target="12">0</span>
+              <p>Guests Aboard</p>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-n js-counter" data-target="4000">0</span>
+              <p>Nautical Mile Range</p>
+            </div>
+          </div>
+          <a href="#experiences" class="link-arrow js-reveal" id="about-link">Explore Life Aboard
+            <span>&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       §02 — EDITORIAL SHOWCASE
+  ════════════════════════════════════ -->
+  <section class="editorial-section" id="experiences">
+    <div class="editorial-container">
+
+      <!-- ── LEFT: Stacked image collage ── -->
+      <div class="editorial-images">
+        <div class="ed-img ed-img--1 js-reveal" id="ed-img-1">
+          <img src="https://www.mangustayachts.com/wp-content/uploads/2026/02/Mangusta_165REV.4_launched.jpg" alt="Mangusta 165 REV cutting through open water" loading="lazy" />
+          <span class="ed-img-tag">Mangusta 165 REV</span>
+        </div>
+        <div class="ed-img ed-img--2 js-reveal" id="ed-img-2">
+          <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/4_M165REV.3_exteriors_main_deck-29.jpg" alt="Mangusta 165 REV at golden hour" loading="lazy" />
+          <span class="ed-img-tag">Open Water</span>
+        </div>
+        <div class="ed-img ed-img--3 js-reveal" id="ed-img-3">
+          <img src="https://www.mangustayachts.com/wp-content/uploads/2022/11/0_Mangusta_165REV_1_running-1_cut-1.jpg" alt="Mangusta 165 REV bow view" loading="lazy" />
+          <span class="ed-img-tag">Precision · Power</span>
+        </div>
+        <!-- Floating stat badge -->
+        <div class="ed-badge js-reveal" id="ed-badge">
+          <span class="ed-badge-num">165</span>
+          <span class="ed-badge-label">ft / Mangusta REV</span>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Editorial copy ── -->
+      <div class="editorial-text">
+        <p class="eyebrow eyebrow--blue js-reveal" id="ed-eyebrow">Signature Experiences</p>
+        <h2 class="ed-headline js-reveal" id="ed-headline">
+          <span class="ed-line">Where</span>
+          <span class="ed-line">precision</span>
+          <span class="ed-line ed-line--italic">meets</span>
+          <span class="ed-line">freedom.</span>
+        </h2>
+        <div class="ed-sub js-reveal" id="ed-sub">
+          <p>Every visit. A new chapter.</p>
+          <p>Curated moments. Every week.</p>
+        </div>
+        <div class="ed-event-preview js-reveal" id="ed-ev-preview">
+          <div class="ed-ev-row" id="ed-ev-1">
+            <div class="ed-ev-img">
+              <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/1_M165REV.3_running-8.jpg" alt="Island Brunch Voyage" loading="lazy" />
+            </div>
+            <div class="ed-ev-info">
+              <span class="ed-ev-tag">Voyage</span>
+              <h4>Island Brunch Voyage</h4>
+              <p>Every Weekend · From $85</p>
+            </div>
+            <a href="#reserve" class="ed-ev-cta" id="ev-cta-1">Book →</a>
+          </div>
+          <div class="ed-ev-row" id="ed-ev-2">
+            <div class="ed-ev-img">
+              <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/1_M165REV.3_running-7.jpg" alt="Sunset Passage" loading="lazy" />
+            </div>
+            <div class="ed-ev-info">
+              <span class="ed-ev-tag">Social</span>
+              <h4>Sunset Passage</h4>
+              <p>Daily at Golden Hour · Complimentary</p>
+            </div>
+            <a href="#reserve" class="ed-ev-cta" id="ev-cta-2">Book →</a>
+          </div>
+          <div class="ed-ev-row" id="ed-ev-3">
+            <div class="ed-ev-img">
+              <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/1_M165REV.3_running-5.jpg" alt="Live Jazz Evening" loading="lazy" />
+            </div>
+            <div class="ed-ev-info">
+              <span class="ed-ev-tag">Entertainment</span>
+              <h4>Live Jazz Evening</h4>
+              <p>Selected Fridays · From $120</p>
+            </div>
+            <a href="#reserve" class="ed-ev-cta" id="ev-cta-3">Book →</a>
+          </div>
+        </div>
+        <a href="#events-full" class="ed-all-btn js-reveal" id="btn-all-events">
+          <span>All Events</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── BOTTOM: Category icon strip ── -->
+    <div class="ed-categories" id="events-full">
+      <div class="ed-cat-grid">
+        <div class="ed-cat-item js-reveal" id="cat-club">
+          <div class="ed-cat-icon">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 4C11.163 4 4 11.163 4 20s7.163 16 16 16 16-7.163 16-16S28.837 4 20 4zm0 2c7.732 0 14 6.268 14 14S27.732 34 20 34 6 27.732 6 20 12.268 6 20 6zm-1 5v9l7 4-1.5 2.5L17 22V11h2z"
+                fill="currentColor" />
+            </svg>
+          </div>
+          <h5>Club</h5>
+          <p>Private harbour, bar, dining, poolside, and 360-degree ocean promenades.</p>
+        </div>
+        <div class="ed-cat-item js-reveal" id="cat-voyages">
+          <div class="ed-cat-icon">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 28s4-4 14-4 14 4 14 4M20 8v16M13 12l7-4 7 4" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h5>Voyages</h5>
+          <p>Compass-led journeys, anchor drops, and routes worth repeating all season.</p>
+        </div>
+        <div class="ed-cat-featured" id="cat-center">
+          <div class="ed-cat-featured-img">
+            <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/1_M165REV.3_running-4.jpg" alt="Mangusta 165 REV aerial" loading="lazy" />
+            <div class="ed-cat-featured-overlay">
+              <div class="ed-cat-featured-circle">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <path d="M5 14h18M14 5l9 9-9 9" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ed-cat-item js-reveal" id="cat-dining">
+          <div class="ed-cat-icon">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 8v10a8 8 0 0016 0V8M20 28v4M16 32h8" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h5>Dining</h5>
+          <p>Curated menus, chef-led tastings, and a table that moves with the tide.</p>
+        </div>
+        <div class="ed-cat-item js-reveal" id="cat-private">
+          <div class="ed-cat-icon">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4L6 16v20h28V16L20 4z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M16 36V24h8v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h5>Private</h5>
+          <p>The entire vessel reserved — for occasions that deserve their own horizon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ═══════════════════════════════════
+       §06 — GALLERY
+  ════════════════════════════════════ -->
+  <section class="section gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow js-reveal">Gallery</p>
+        <h2 class="section-title">
+          <span class="js-reveal-line">The vessel.</span>
+          <span class="js-reveal-line">Seen at sea.</span>
+        </h2>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item gallery-item--tall js-img-reveal" id="gi-1">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/1_M165REV.3_running-3.jpg" alt="Mangusta 165 REV at golden hour" loading="lazy" />
+        <div class="gallery-item-label">Underway</div>
+      </div>
+      <div class="gallery-item js-img-reveal" id="gi-2">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/5_M165REV.3_interiors_main_salon-9.jpg" alt="Ocean lounge at sunset" loading="lazy" />
+        <div class="gallery-item-label">Ocean Lounge</div>
+      </div>
+      <div class="gallery-item js-img-reveal" id="gi-3">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/5_M165REV.3_interiors_main_salon-8.jpg" alt="Aerial view of Mangusta 165 REV" loading="lazy" />
+        <div class="gallery-item-label">From Above</div>
+      </div>
+      <div class="gallery-item gallery-item--wide js-img-reveal" id="gi-4">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/5_M165REV.3_interiors_main_salon-6.jpg" alt="Private event on the yacht" loading="lazy" />
+        <div class="gallery-item-label">Private Moments</div>
+      </div>
+      <div class="gallery-item js-img-reveal" id="gi-5">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/5_M165REV.3_interiors_main_salon-5.jpg" alt="Fine dining aboard Mangusta 165 REV" loading="lazy" />
+        <div class="gallery-item-label">Horizon Table</div>
+      </div>
+      <div class="gallery-item gallery-item--tall js-img-reveal" id="gi-6">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/4_M165REV.3_exteriors_main_deck-29.jpg" alt="Open-ocean view from the yacht" loading="lazy" />
+        <div class="gallery-item-label">Open Water</div>
+      </div>
+      <div class="gallery-item js-img-reveal" id="gi-7">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/4_M165REV.3_exteriors_main_deck-28.jpg" alt="Tender arrival at Mangusta 165 REV" loading="lazy" />
+        <div class="gallery-item-label">Arrival</div>
+      </div>
+      <div class="gallery-item js-img-reveal" id="gi-8">
+        <img src="https://www.mangustayachts.com/wp-content/uploads/2024/09/4_M165REV.3_exteriors_main_deck-26.jpg" alt="Mangusta 165 REV on the horizon" loading="lazy" />
+        <div class="gallery-item-label">Into the Blue</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       §07 — TESTIMONIALS
+  ════════════════════════════════════ -->
+  <section class="section testimonial-section" id="testimonials">
+    <div class="container">
+      <p class="eyebrow js-reveal">What They Say</p>
+
+      <div class="testimonial-track" id="testimonialTrack">
+        <blockquote class="testimonial active" id="t-1">
+          <p class="testimonial-quote">&ldquo;To dine aboard Mangusta 165 REV is to understand what <em>away from it
+              all</em> truly means. The food, the water, the silence between courses — nothing else comes close.&rdquo;
+          </p>
+          <footer class="testimonial-attr">
+            <span class="testimonial-name">Victoria A.</span>
+            <span class="testimonial-source">Architectural Digest, 2024</span>
+          </footer>
+        </blockquote>
+        <blockquote class="testimonial" id="t-2">
+          <p class="testimonial-quote">&ldquo;The most extraordinary week I have spent anywhere in the world. The moment
+            we left the harbour, ordinary life felt beautifully far away.&rdquo;</p>
+          <footer class="testimonial-attr">
+            <span class="testimonial-name">James C.</span>
+            <span class="testimonial-source">The New York Times</span>
+          </footer>
+        </blockquote>
+        <blockquote class="testimonial" id="t-3">
+          <p class="testimonial-quote">&ldquo;I've hosted retreats across four continents. None compare to a week aboard
+            Mangusta 165 REV. The crew anticipated everything; the sea handled the rest.&rdquo;</p>
+          <footer class="testimonial-attr">
+            <span class="testimonial-name">Marcus T.</span>
+            <span class="testimonial-source">CEO, Pinnacle Group</span>
+          </footer>
+        </blockquote>
+      </div>
+
+      <div class="testimonial-nav" id="testimonialNav">
+        <button class="t-nav-btn active" id="t-dot-1" aria-label="Testimonial 1" data-index="0"></button>
+        <button class="t-nav-btn" id="t-dot-2" aria-label="Testimonial 2" data-index="1"></button>
+        <button class="t-nav-btn" id="t-dot-3" aria-label="Testimonial 3" data-index="2"></button>
+      </div>
+
+      <div class="press-logos js-reveal">
+        <span>Architectural Digest</span>
+        <span>The New York Times</span>
+        <span>Condé Nast Traveller</span>
+        <span>Forbes Travel Guide</span>
+        <span>Wallpaper*</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       §08 — RESERVATIONS
+  ════════════════════════════════════ -->
+  <section class="section reserve-section" id="reserve">
+    <div class="container">
+      <div class="reserve-grid">
+        <div class="reserve-left">
+          <p class="eyebrow js-reveal">Reservations</p>
+          <h2 class="reserve-title">
+            <span class="js-reveal-line">Your horizon</span>
+            <span class="js-reveal-line">awaits.</span>
+          </h2>
+          <p class="reserve-desc js-reveal">For private charters, bespoke itineraries, or events at sea, share your
+            preferred dates and our charter team will shape the voyage around you.</p>
+          <div class="reserve-contact js-reveal">
+            <a href="tel:+12125550199" class="reserve-contact-item" id="res-phone">
+              <span class="rci-label">Telephone</span>
+              <span class="rci-val">+1 212 555 0199</span>
+            </a>
+            <a href="mailto:charter@thegrandyacht.com" class="reserve-contact-item" id="res-email">
+              <span class="rci-label">Email</span>
+              <span class="rci-val">charter@thegrandyacht.com</span>
+            </a>
+          </div>
+          <div class="reserve-hours js-reveal">
+            <p class="rci-label">Charter Desk</p>
+            <p>Monday – Friday &nbsp;&nbsp;9:00 AM – 7:00 PM</p>
+            <p>Saturday – Sunday &nbsp;&nbsp;10:00 AM – 5:00 PM</p>
+          </div>
+        </div>
+
+        <div class="reserve-right js-reveal">
+          <form class="reserve-form" id="reserveForm" novalidate>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="f-name">Full Name</label>
+                <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label for="f-email">Email Address</label>
+                <input type="email" id="f-email" name="email" placeholder="your@email.com" autocomplete="email"
+                  required />
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="f-phone">Phone Number</label>
+                <input type="tel" id="f-phone" name="phone" placeholder="+1 (212) 000 0000" autocomplete="tel" />
+              </div>
+              <div class="form-field">
+                <label for="f-guests">Guests Aboard</label>
+                <div class="guest-field">
+                  <button type="button" id="gMinus" class="guest-ctrl" aria-label="Fewer guests">&minus;</button>
+                  <span id="gCount" class="guest-count">2</span>
+                  <button type="button" id="gPlus" class="guest-ctrl" aria-label="More guests">&plus;</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="f-date">Embarkation Date</label>
+                <input type="date" id="f-date" name="date" required />
+              </div>
+              <div class="form-field">
+                <label for="f-time">Voyage Length</label>
+                <select id="f-time" name="time" required>
+                  <option value="">Select duration</option>
+                  <option>Day Charter</option>
+                  <option>3 Nights</option>
+                  <option>7 Nights</option>
+                  <option>14 Nights</option>
+                  <option>Bespoke</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="f-experience">Voyage Style</label>
+              <select id="f-experience" name="experience">
+                <option value="">Select a voyage</option>
+                <option>Coastal Escape</option>
+                <option>Island Hopping</option>
+                <option>Culinary Voyage</option>
+                <option>Wellness Retreat</option>
+                <option>Private Celebration</option>
+                <option>Design My Own</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="f-requests">Special Requests</label>
+              <textarea id="f-requests" name="requests" rows="4"
+                placeholder="Dietary requirements, celebrations, accessibility needs…"></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-block" id="btn-submit-res">Request a Charter</button>
+            <p class="form-note">By submitting, you agree to our <a href="#">Privacy Policy</a>. Our charter team will
+              respond within one business day.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       §06 — FOOTER
+  ════════════════════════════════════ -->
+  <footer class="footer" id="contact">
+    <div class="container">
+
+      <div class="footer-top js-reveal">
+        <div class="footer-brand">
+          <div class="footer-wordmark">MANGUSTA 165 REV</div>
+          <p class="footer-tagline">Where precision meets freedom.</p>
+        </div>
+        <div class="footer-newsletter">
+          <h5>Follow the Horizon</h5>
+          <p>Receive private voyage notes, new itineraries, and charter availability.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault();">
+            <input type="email" placeholder="Email Address" required>
+            <button type="submit">→</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-main js-reveal">
+        <div class="footer-info">
+          <h5>Home Port</h5>
+          <address class="footer-address">
+            Mediterranean · Caribbean<br />
+            Indian Ocean · South Pacific<br />
+            Worldwide by arrangement
+          </address>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">Ig</a>
+            <a href="#" aria-label="Facebook">Fb</a>
+            <a href="#" aria-label="TripAdvisor">Ta</a>
+          </div>
+        </div>
+
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h5>Experiences</h5>
+            <ul>
+              <li><a href="#experiences">The Ocean Lounge</a></li>
+              <li><a href="#experiences">The Horizon Table</a></li>
+              <li><a href="#experiences">The Sun Deck</a></li>
+              <li><a href="#elevated">Private Voyages</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Plan</h5>
+            <ul>
+              <li><a href="#reserve">Reservations</a></li>
+              <li><a href="#private">Private Events</a></li>
+              <li><a href="#events">What's On</a></li>
+              <li><a href="#">Menus</a></li>
+              <li><a href="#">Gift Cards</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Company</h5>
+            <ul>
+              <li><a href="#about">About Mangusta 165 REV</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Sustainability</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Charter Desk</h5>
+            <ul class="footer-hours-list">
+              <li><span>Mon – Fri</span><span>9am – 7pm</span></li>
+              <li><span>Sat – Sun</span><span>10am – 5pm</span></li>
+              <li><span>Guests aboard</span><span>24/7 service</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Mangusta 165 REV. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>
