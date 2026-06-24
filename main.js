@@ -15,9 +15,9 @@
     SEQUENCE_PATH:   'sequence/',
     SCROLL_PER_FRAME: 3,
     LENIS_DURATION:  1.1,
-    CACHE_RADIUS:    4,
-    MAX_CACHE:       16,
-    MAX_PENDING:     12,
+    CACHE_RADIUS:    24,
+    MAX_CACHE:       80,
+    MAX_PENDING:     30,
   };
 
   const CHAPTERS = [
@@ -916,6 +916,18 @@
           initPageEnter();
           initCustomCursor();
           initTestimonials();
+
+          // Background prefetch all compressed frames into disk cache for instant scrub
+          setTimeout(() => {
+            let f = 1;
+            const worker = () => {
+              if (f > CFG.TOTAL_FRAMES) return;
+              fetch(`${CFG.SEQUENCE_PATH}${f}.jpg`, { cache: 'force-cache', priority: 'low' })
+                .then(() => { f++; setTimeout(worker, 10); })
+                .catch(() => { f++; setTimeout(worker, 10); });
+            };
+            for(let i=0; i<4; i++) { setTimeout(worker, i*100); }
+          }, 1500);
           initGuestPicker();
           initForms();
           initAnchors();
