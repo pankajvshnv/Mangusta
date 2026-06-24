@@ -11,14 +11,11 @@
      CONFIG
   ══════════════════════════════════════════════ */
   const CFG = {
-    TOTAL_FRAMES:    345,
-    SEQUENCE_PATH:   'sequence/',
-    SCROLL_PER_FRAME: 9,  // 3x more scroll per frame (compensates for thinning)
-    LENIS_DURATION:  1.1,
-    CACHE_RADIUS:    30,
-    MAX_CACHE:       100,
-    MAX_PENDING:     40,
-    PRELOAD_COUNT:   40,   // frames to preload before showing site
+    VIDEO_SRC_MP4:    'hero.mp4',
+    VIDEO_SRC_WEBM:   'hero.webm',
+    VIDEO_DURATION:   13.8,         // seconds (345 frames ÷ 25fps)
+    SCROLL_PER_SEC:   220,          // scroll px per video second (controls speed feel)
+    LENIS_DURATION:   1.1,
   };
 
   const CHAPTERS = [
@@ -34,6 +31,7 @@
   const images     = new Map();
   const loading    = new Map();
   let currentFrame = 0;
+  let heroVideo    = null;   // the hidden <video> element used for scrubbing
   let lenis        = null;
   let guestCount   = 2;
   let tIdx         = 0;
@@ -62,7 +60,7 @@
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
   /* ══════════════════════════════════════════════
-     CANVAS
+     CANVAS — video-backed
   ══════════════════════════════════════════════ */
   function resizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -70,71 +68,31 @@
     canvas.width  = w * dpr;  canvas.height = h * dpr;
     canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
     ctx.scale(dpr, dpr);
-    drawFrame(currentFrame);
+    paintVideoFrame();
   }
 
-  function drawFrame(idx) {
-    const img = images.get(idx);
-    if (!img || !img.complete || !img.naturalWidth) return;
+  function paintVideoFrame() {
+    if (!heroVideo || heroVideo.readyState < 2) return;
     const w = window.innerWidth, h = window.innerHeight;
-    // COVER + extra zoom (1.28×) — pushes any letterbox bars off-screen
     const ZOOM = 1.28;
-    const scale = Math.max(w / img.naturalWidth, h / img.naturalHeight) * ZOOM;
-    const dw = img.naturalWidth  * scale;
-    const dh = img.naturalHeight * scale;
+    const scale = Math.max(w / heroVideo.videoWidth, h / heroVideo.videoHeight) * ZOOM;
+    const dw = heroVideo.videoWidth  * scale;
+    const dh = heroVideo.videoHeight * scale;
     const dx = (w - dw) / 2;
     const dy = (h - dh) / 2;
     ctx.clearRect(0, 0, w, h);
-    ctx.drawImage(img, dx, dy, dw, dh);
+    ctx.drawImage(heroVideo, dx, dy, dw, dh);
   }
 
-  function trimFrameCache(keepAround) {
-    if (images.size <= CFG.MAX_CACHE) return;
-    [...images.keys()]
-      .sort((a, b) => Math.abs(b - keepAround) - Math.abs(a - keepAround))
-      .slice(0, images.size - CFG.MAX_CACHE)
-      .forEach(idx => images.delete(idx));
-  }
-
-  function requestFrame(idx, drawWhenReady = false) {
-    idx = clamp(idx, 0, CFG.TOTAL_FRAMES - 1);
-    if (images.has(idx) || loading.has(idx) || loading.size >= CFG.MAX_PENDING) return;
-    const img = new Image();
-    loading.set(idx, img);
-    img.decoding = 'async';
-    img.src = `${CFG.SEQUENCE_PATH}${idx + 1}.jpg`;
-    img.onload = () => {
-      loading.delete(idx);
-      images.set(idx, img);
-      trimFrameCache(currentFrame);
-      if (drawWhenReady && idx === currentFrame) drawFrame(idx);
-    };
-    img.onerror = () => loading.delete(idx);
-  }
-
-  function warmFrames(center, direction = 1) {
-    // A fast flick can cross hundreds of frames. Abort requests that are no
-    // longer near the playhead before warming the new neighbourhood.
-    loading.forEach((img, idx) => {
-      if (Math.abs(idx - center) > CFG.CACHE_RADIUS * 2) {
-        img.onload = null;
-        img.onerror = null;
-        img.src = 'data:,';
-        loading.delete(idx);
-      }
-    });
-    requestFrame(center, true);
-    for (let step = 1; step <= CFG.CACHE_RADIUS; step++) {
-      requestFrame(center + step * direction);
-      requestFrame(center - step * direction);
-    }
-  }
+  // Legacy stubs — no longer used but avoids undefined errors
+  function drawFrame()    { paintVideoFrame(); }
+  function warmFrames()   {}
+  function trimFrameCache() {}
 
   /* ══════════════════════════════════════════════
-     PRELOAD
+     VIDEO PRELOAD — streams hero video into browser
   ══════════════════════════════════════════════ */
   function preloadImages(onProgress, onComplete) {
-    let loaded = 0;
     const msgs = [
       'Preparing your voyage',
       'Charting the course',
@@ -142,24 +100,48 @@
       'Opening the horizon',
       'Welcome aboard',
     ];
-    // With 345 frames at ~28KB each = ~9.7MB total, we can preload all upfront
-    const targetLoadCount = Math.min(CFG.PRELOAD_COUNT, CFG.TOTAL_FRAMES);
 
-    for (let i = 0; i < targetLoadCount; i++) {
-      const img = new Image();
-      img.decoding = 'async';
-      img.src = `${CFG.SEQUENCE_PATH}${i + 1}.jpg`;
-      const settle = () => {
-        loaded++;
-        const pct = loaded / targetLoadCount;
-        onProgress(pct);
+    heroVideo = document.createElement('video');
+    heroVideo.muted    = true;
+    heroVideo.playsInline = true;
+    heroVideo.preload  = 'auto';
+    heroVideo.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none';
+    document.body.appendChild(heroVideo);
+
+    // WebM first (Chrome/Firefox), MP4 fallback (Safari)
+    const webm = document.createElement('source');
+    webm.src  = CFG.VIDEO_SRC_WEBM;
+    webm.type = 'video/webm';
+    const mp4 = document.createElement('source');
+    mp4.src  = CFG.VIDEO_SRC_MP4;
+    mp4.type = 'video/mp4';
+    heroVideo.append(webm, mp4);
+
+    let msgIdx = 0;
+    const msgTimer = setInterval(() => {
+      msgIdx = Math.min(msgIdx + 1, msgs.length - 1);
+      if (loaderStatus) loaderStatus.textContent = msgs[msgIdx];
+    }, 600);
+
+    heroVideo.addEventListener('canplaythrough', () => {
+      clearInterval(msgTimer);
+      onProgress(1);
+      if (loaderStatus) loaderStatus.textContent = msgs[msgs.length - 1];
+      onComplete();
+    }, { once: true });
+
+    // Progress from buffered data
+    heroVideo.addEventListener('progress', () => {
+      if (!heroVideo.duration) return;
+      try {
+        const pct = heroVideo.buffered.end(0) / heroVideo.duration;
+        onProgress(Math.min(pct, 0.95));
         const mi = Math.min(Math.floor(pct * msgs.length), msgs.length - 1);
         if (loaderStatus) loaderStatus.textContent = msgs[mi];
-        if (loaded === targetLoadCount) onComplete();
-      };
-      img.onload = () => { images.set(i, img); settle(); };
-      img.onerror = settle;
-    }
+      } catch(e) {}
+    });
+
+    heroVideo.load();
   }
 
   /* ══════════════════════════════════════════════
@@ -297,40 +279,53 @@
     gsap.ticker.lagSmoothing(0);
   }
 
-  /* (hero-reveal section removed) */
-
   /* ══════════════════════════════════════════════
-     CANVAS SCROLL SEQUENCE
+     VIDEO SCROLL SEQUENCE
   ══════════════════════════════════════════════ */
   function initCanvasSequence() {
     gsap.registerPlugin(ScrollTrigger);
-    const totalScroll = CFG.TOTAL_FRAMES * CFG.SCROLL_PER_FRAME;
+    const totalScroll = CFG.VIDEO_DURATION * CFG.SCROLL_PER_SEC;
 
-    let previousFrame = 0;
+    // Paint loop — runs every animation frame only while pinned
+    let rafId = null;
+    function startPaintLoop() {
+      if (rafId) return;
+      const tick = () => { paintVideoFrame(); rafId = requestAnimationFrame(tick); };
+      rafId = requestAnimationFrame(tick);
+    }
+    function stopPaintLoop() {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      paintVideoFrame(); // paint final frame
+    }
+
     ScrollTrigger.create({
       trigger: '#hero',
       start:   'top top',
       end:     `+=${totalScroll}`,
       pin:     true,
-      scrub:   true,
+      scrub:   0.15,        // tiny lag gives buttery feel
+      onEnter:     () => startPaintLoop(),
+      onLeave:     () => stopPaintLoop(),
+      onEnterBack: () => startPaintLoop(),
+      onLeaveBack: () => stopPaintLoop(),
       onUpdate(self) {
         const p = self.progress;
         scrollCue && (p > 0.015 ? scrollCue.classList.add('gone') : scrollCue.classList.remove('gone'));
         const hl = $('#heroLogo');
-        if (hl) {
-          // Fades out extremely fast (under 0.10s of scrolling equivalent)
-          hl.style.opacity = Math.max(0, 1 - (p * 30));
-        }
+        if (hl) hl.style.opacity = Math.max(0, 1 - (p * 30));
         if (progFill) progFill.style.width = (p * 100) + '%';
-        const frame = clamp(Math.round(p * (CFG.TOTAL_FRAMES - 1)), 0, CFG.TOTAL_FRAMES - 1);
-        if (frame !== currentFrame) {
-          const direction = frame >= previousFrame ? 1 : -1;
-          currentFrame = frame;
-          drawFrame(frame);
-          warmFrames(frame, direction);
-          previousFrame = frame;
+
+        if (heroVideo && heroVideo.readyState >= 2) {
+          const t = p * CFG.VIDEO_DURATION;
+          // Only seek when delta is noticeable — avoids noisy seeks
+          if (Math.abs(heroVideo.currentTime - t) > 0.01) {
+            heroVideo.currentTime = t;
+          }
         }
-        updateChapters(frame);
+
+        // Chapter titles (scaled to video time)
+        const frac = p;
+        updateChapters(Math.round(frac * 344));
       },
     });
 
@@ -915,24 +910,6 @@
           initCustomCursor();
           initTestimonials();
 
-          // Background prefetch ALL 345 frames using 8 parallel workers — fills browser disk cache
-          setTimeout(() => {
-            const WORKERS = 8;
-            const queues = Array.from({length: WORKERS}, (_, wi) => {
-              let f = CFG.PRELOAD_COUNT + 1 + wi; // start after what was already preloaded
-              const run = () => {
-                if (f > CFG.TOTAL_FRAMES) return;
-                const cur = f; f += WORKERS;
-                const img = new Image();
-                img.decoding = 'async';
-                img.src = `${CFG.SEQUENCE_PATH}${cur}.jpg`;
-                img.onload = () => { images.set(cur - 1, img); trimFrameCache(currentFrame); run(); };
-                img.onerror = run;
-              };
-              return run;
-            });
-            queues.forEach((run, i) => setTimeout(run, i * 80));
-          }, 800);
           initGuestPicker();
           initForms();
           initAnchors();
