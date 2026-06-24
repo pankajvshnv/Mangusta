@@ -11,13 +11,14 @@
      CONFIG
   ══════════════════════════════════════════════ */
   const CFG = {
-    TOTAL_FRAMES:    1033,
+    TOTAL_FRAMES:    345,
     SEQUENCE_PATH:   'sequence/',
-    SCROLL_PER_FRAME: 3,
+    SCROLL_PER_FRAME: 9,  // 3x more scroll per frame (compensates for thinning)
     LENIS_DURATION:  1.1,
-    CACHE_RADIUS:    24,
-    MAX_CACHE:       80,
-    MAX_PENDING:     30,
+    CACHE_RADIUS:    30,
+    MAX_CACHE:       100,
+    MAX_PENDING:     40,
+    PRELOAD_COUNT:   40,   // frames to preload before showing site
   };
 
   const CHAPTERS = [
@@ -141,11 +142,9 @@
       'Opening the horizon',
       'Welcome aboard',
     ];
-    // Decode only a small opening buffer. The 5.5 GB UHD sequence is then
-    // streamed around the active frame to keep memory use predictable.
-    const targetLoadCount = Math.min(8, CFG.TOTAL_FRAMES);
-    
-    // ONLY load the first `targetLoadCount` images initially!
+    // With 345 frames at ~28KB each = ~9.7MB total, we can preload all upfront
+    const targetLoadCount = Math.min(CFG.PRELOAD_COUNT, CFG.TOTAL_FRAMES);
+
     for (let i = 0; i < targetLoadCount; i++) {
       const img = new Image();
       img.decoding = 'async';
@@ -156,7 +155,6 @@
         onProgress(pct);
         const mi = Math.min(Math.floor(pct * msgs.length), msgs.length - 1);
         if (loaderStatus) loaderStatus.textContent = msgs[mi];
-        
         if (loaded === targetLoadCount) onComplete();
       };
       img.onload = () => { images.set(i, img); settle(); };
@@ -917,17 +915,24 @@
           initCustomCursor();
           initTestimonials();
 
-          // Background prefetch all compressed frames into disk cache for instant scrub
+          // Background prefetch ALL 345 frames using 8 parallel workers — fills browser disk cache
           setTimeout(() => {
-            let f = 1;
-            const worker = () => {
-              if (f > CFG.TOTAL_FRAMES) return;
-              fetch(`${CFG.SEQUENCE_PATH}${f}.jpg`, { cache: 'force-cache', priority: 'low' })
-                .then(() => { f++; setTimeout(worker, 10); })
-                .catch(() => { f++; setTimeout(worker, 10); });
-            };
-            for(let i=0; i<4; i++) { setTimeout(worker, i*100); }
-          }, 1500);
+            const WORKERS = 8;
+            const queues = Array.from({length: WORKERS}, (_, wi) => {
+              let f = CFG.PRELOAD_COUNT + 1 + wi; // start after what was already preloaded
+              const run = () => {
+                if (f > CFG.TOTAL_FRAMES) return;
+                const cur = f; f += WORKERS;
+                const img = new Image();
+                img.decoding = 'async';
+                img.src = `${CFG.SEQUENCE_PATH}${cur}.jpg`;
+                img.onload = () => { images.set(cur - 1, img); trimFrameCache(currentFrame); run(); };
+                img.onerror = run;
+              };
+              return run;
+            });
+            queues.forEach((run, i) => setTimeout(run, i * 80));
+          }, 800);
           initGuestPicker();
           initForms();
           initAnchors();
